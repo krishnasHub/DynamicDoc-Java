@@ -1,0 +1,4 @@
+mvn install:install-file -Dfile=sqljdbc4-2.0.jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc4 -Dversion=2.0 -Dpackaging=jar
+
+mvn install:install-file -Dfile=jackson-core-2.4.3.jar -DgroupId=com.fasterxml.jackson.core -DartifactId=jackson-core -Dversion=2.4.3 -Dpackaging=jar
+
