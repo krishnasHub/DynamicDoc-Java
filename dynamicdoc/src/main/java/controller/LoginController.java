@@ -15,9 +15,7 @@ import util.HibernateUtil;
 @EnableWebMvc
 public class LoginController {
 
-	@RequestMapping(value="login", method = RequestMethod.GET, 
-			produces = "application/json")
-	//@RequestMapping("login")
+	@RequestMapping(value="login", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Object Login(String userName, String password) {		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
