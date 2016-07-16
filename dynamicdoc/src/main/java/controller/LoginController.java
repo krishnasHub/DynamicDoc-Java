@@ -1,5 +1,6 @@
 package controller;
 
+import model.LoginModel;
 import model.User;
 
 import org.hibernate.Session;
@@ -19,10 +20,38 @@ import util.HibernateUtil;
 public class LoginController {
 
 	@RequestMapping(value="login", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Object Login(String userName, String password) {		
+	public @ResponseBody LoginModel Login(String userName, String password) {		
 		LoginDataAccess la = new LoginDataAccess();
 		boolean isSuccess = la.checkUserLogin(userName, password);
+		LoginModel model = new LoginModel();
+		model.setIsSuccess(isSuccess);
 		
-		return isSuccess;
+		if(isSuccess) {
+			UserDataAccess ua = new UserDataAccess();
+			User user = ua.getUserByName(userName);
+			model.setUser(user);
+			if(user.getLoggedIn() == User.LOGGED_IN)
+				model.setWarning("User already logged in.");
+			else
+				la.loginUser(user);
+		}	
+		
+		return model;
+	}
+	
+	@RequestMapping(value="logout", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody LoginModel Logout(String userName) {
+		LoginModel model = new LoginModel();
+		UserDataAccess ua = new UserDataAccess();
+		LoginDataAccess la = new LoginDataAccess();
+		User user = ua.getUserByName(userName);
+		if (user.getLoggedIn() == User.LOGGED_OUT)
+			model.setWarning("User already logged out.");
+		else
+			la.logoutUser(user);
+		
+		model.setIsSuccess(true);
+		
+		return model;
 	}
 }

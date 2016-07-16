@@ -2,6 +2,9 @@ package dataaccess;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
+import util.HibernateUtil;
 import model.User;
 
 public class LoginDataAccess extends GenericDataAccess {
@@ -17,5 +20,21 @@ public class LoginDataAccess extends GenericDataAccess {
 		}
 		
 		return false;
+	}
+	
+	public void loginUser(User user) {
+		user.setLoggedIn(User.LOGGED_IN);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
+	}
+	
+	public void logoutUser(User user) {
+		user.setLoggedIn(User.LOGGED_OUT);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
 	}
 }

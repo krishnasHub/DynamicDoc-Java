@@ -6,8 +6,10 @@ public class User {
 	private String name;
 	private String emailId;
 	private String password;
+	private int loggedIn;
 	
-	
+	public static final int LOGGED_IN = 1;
+	public static final int LOGGED_OUT = 0;
 	
 	public int getId() {
 		return id;
@@ -32,6 +34,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public int getLoggedIn() {
+		return loggedIn;
+	}
+	public void setLoggedIn(int loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 	
 	

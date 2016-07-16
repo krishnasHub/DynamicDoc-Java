@@ -16,6 +16,9 @@
         </property>
         <property name="emailId" type="string">
             <column name="EmailId" not-null="true" unique="true" />
+        </property> 
+        <property name="loggedIn" type="int">
+            <column name="LoggedIn" not-null="false" unique="false" />
         </property>
                 
     </class>
