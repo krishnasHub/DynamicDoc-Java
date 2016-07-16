@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import dataaccess.GenericDataAccess;
+import dataaccess.LoginDataAccess;
+import dataaccess.UserDataAccess;
 import util.HibernateUtil;
 
 @Controller
@@ -17,10 +20,9 @@ public class LoginController {
 
 	@RequestMapping(value="login", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Object Login(String userName, String password) {		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		Object o = session.createCriteria(User.class).list();
+		LoginDataAccess la = new LoginDataAccess();
+		boolean isSuccess = la.checkUserLogin(userName, password);
 		
-		return o;
+		return isSuccess;
 	}
 }
